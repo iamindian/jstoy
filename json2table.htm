@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<title>Json 2 Table</title>
+		<meta charset="utf-8"/>
+	<script type="text/javascript">
+		var data = JSON.stringify(
+			{
+				data:[
+			 		["name","age","skill","birth"],
+					["jason","24","javascript","1950-2-3"],
+					["ketty","25","java","1950-2-3"],
+					["darren","23","python","1950-3-3"],
+					["kiky","25","c++","1950-5-3"],
+					["chiky","23","c","1950-6-3"],
+					["petty","21","c#","1950-2-3"],
+					["bana","27","shell","1950-8-3"],
+				] 		
+			}
+		)
+		function JsonTable(args){
+			if(typeof args === "undefined") args = {};
+			if(typeof args !== "object")  return
+			if(!args.data.data instanceof Array) return
+			var data = args.data.data;
+			createTable();
+			function createTable(){
+				var docFrag = document.createDocumentFragment(),
+				table = document.createElement("table");
+				createHeader();
+				createBody();
+				docFrag.appendChild(table);
+				document.getElementById(args.id).appendChild(docFrag);
+				return table;
+				function createHeader(){
+					var thead=document.createElement("thead"),i,th,text
+					row=document.createElement("tr");
+					for(i=0;i<data[0].length;i++){
+						th = document.createElement("th"),
+						text = document.createTextNode(data[0][i]);
+						th.appendChild(text);
+						row.appendChild(th);
+					}
+					thead.appendChild(row);
+					table.appendChild(thead);
+				}
+				function createBody(){
+					var tbody=document.createElement("tbody"),tr,td,text,i,x;
+					for(i=1;i<data.length;i++){
+						if(!i) continue;
+						tr = document.createElement("tr");
+						for(x in data[i]){
+							td = document.createElement("td"),
+							text = document.createTextNode(data[i][x]);
+							td.appendChild(text);
+							tr.appendChild(td);
+						}
+						tbody.appendChild(tr);
+					}
+					table.appendChild(tbody);
+				}
+			
+			}
+			
+		}
+		window.onload = function(){
+			var args = {id:"container",data:JSON.parse(data)};
+			var table = new JsonTable(args);
+			
+		}
+	</script>
+	</head>
+	<body id="container">
+	</body>
+</html>
