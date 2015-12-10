@@ -19,11 +19,11 @@
 			}
 		)
 		function JsonTable(args){
-			if(typeof args === "undefined") args = {};
+			if(typeof args !== "object")  return	
 			if(typeof args !== "object")  return
 			if(!args.data.data instanceof Array) return
 			var data = args.data.data;
-			createTable();
+			return createTable();
 			function createTable(){
 				var docFrag = document.createDocumentFragment(),
 				table = document.createElement("table");
